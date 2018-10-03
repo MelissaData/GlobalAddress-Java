@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="melissadata.globaladdress.view.GlobalAddressController">
+    <center>
+        <TabPane fx:id="tabPane" prefHeight="323.0" prefWidth="674.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab text="Configuration">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="14.0" layoutY="28.0" text="Options" underline="true">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font></Label>
+                                <Label layoutX="25.0" layoutY="63.0" prefHeight="17.0" prefWidth="151.0" text="Delivery Lines:" />
+                                <Label layoutX="26.0" layoutY="105.0" text="Line Seperator:" />
+                                <Label layoutX="26.0" layoutY="152.0" text="Output Script:" />
+                                <ComboBox fx:id="optionDeliveryLinesBox" layoutX="26.0" layoutY="80.0" onAction="#setOptionDeliveryLines" prefWidth="150.0" />
+                                <ComboBox fx:id="optionLineSeperatorBox" layoutX="26.0" layoutY="122.0" onAction="#setOptionLineSeparator" prefWidth="150.0" />
+                                <ComboBox fx:id="optionOutputScriptBox" layoutX="26.0" layoutY="169.0" onAction="#setOptionOutputScript" prefWidth="150.0" />
+                                <Label layoutX="26.0" layoutY="202.0" text="Output GeoCoding:" />
+                                <ComboBox fx:id="optionOutputGeoCodingBox" layoutX="26.0" layoutY="223.0" onAction="#setOptionOutputGeoCoding" prefWidth="150.0" />
+                                <Label layoutX="26.0" layoutY="256.0" text="Country of Origin:" />
+                                <TextField fx:id="optionCountryOfOriginBox" layoutX="26.0" layoutY="277.0" prefWidth="150.0" />
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="responseTabButtonArea" text="Response">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TextArea fx:id="ResponseTextArea" layoutX="208.0" layoutY="58.0" prefHeight="471.0" prefWidth="600.0" promptText="Send a request..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <left>
+        <AnchorPane prefHeight="449.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <TextField fx:id="inputLicenseKeyText" layoutX="12.0" layoutY="47.0" prefHeight="25.0" prefWidth="180.0" promptText="License Key..." />
+                <Label contentDisplay="CENTER" layoutX="30.0" layoutY="7.0" text="Web Service Input" textAlignment="CENTER" underline="true">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Label>
+                <Label layoutX="36.0" layoutY="87.0" text="Address Information" underline="true">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="inputAddressLine1Text" layoutX="10.0" layoutY="107.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter Address Line 1..." />
+                <TextField fx:id="inputAddressLine2Text" layoutX="10.0" layoutY="132.0" prefWidth="180.0" promptText="Enter Address Line 2..." />
+                <TextField fx:id="inputAddressLine3Text" layoutX="10.0" layoutY="157.0" prefWidth="180.0" promptText="Enter Address Line 3..." />
+                <TextField fx:id="inputAddressLine4Text" layoutX="10.0" layoutY="182.0" prefWidth="180.0" promptText="Enter Address Line 4..." />
+                <TextField fx:id="inputAddressLine5Text" layoutX="10.0" layoutY="207.0" prefWidth="180.0" promptText="Enter Address Line 5..." />
+                <TextField fx:id="inputAddressLine6Text" layoutX="10.0" layoutY="232.0" prefWidth="180.0" promptText="Enter Address Line 6..." />
+                <TextField fx:id="inputAddressLine7Text" layoutX="10.0" layoutY="257.0" prefWidth="180.0" promptText="Enter Address Line 7..." />
+                <TextField fx:id="inputAddressLine8Text" layoutX="10.0" layoutY="282.0" prefWidth="180.0" promptText="Enter Address Line 8...">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets></TextField>
+                <TextField fx:id="inputLocalityText" layoutX="10.0" layoutY="307.0" prefWidth="180.0" promptText="Enter Locality..." />
+                <TextField fx:id="inputAdministrativeAreaText" layoutX="10.0" layoutY="332.0" prefWidth="180.0" promptText="Enter Administrative Area..." />
+                <TextField fx:id="inputPostalCodeText" layoutX="10.0" layoutY="357.0" prefWidth="180.0" promptText="Enter Postal Code..." />
+                <TextField fx:id="inputCountryText" layoutX="9.0" layoutY="382.0" prefWidth="180.0" promptText="Enter Country..." />
+                <RadioButton fx:id="jsonResponseFormatRadio" layoutX="22.0" layoutY="429.0" mnemonicParsing="false" text="JSON" />
+                <RadioButton layoutX="103.0" layoutY="429.0" mnemonicParsing="false" text="XML" fx:id="xmlResponseFormatRadio" />
+                <ButtonBar layoutY="446.0" prefHeight="40.0" prefWidth="110.0">
+                    <buttons>
+                        <Button fx:id="buttonClear" mnemonicParsing="false" text="Clear" />
+                        <Button fx:id="buttonSend" mnemonicParsing="false" prefHeight="25.0" text="Send" />
+                    </buttons>
+                </ButtonBar>
+            </children>
+        </AnchorPane>
+    </left>
+    <bottom>
+        <TextArea fx:id="RequestTextArea" editable="false" prefHeight="100.0" prefWidth="600.0" promptText="Send a request..." wrapText="true" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>
