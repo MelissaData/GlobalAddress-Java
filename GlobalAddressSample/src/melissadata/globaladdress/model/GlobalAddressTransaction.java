@@ -136,7 +136,7 @@ public class GlobalAddressTransaction {
                 request += "&postal=" + URLEncoder.encode(getPostalCode(), "UTF-8");
 
             if(!getCountry().equals(""))
-                request += "&country=" + URLEncoder.encode(getCountry(), "UTF-8");
+                request += "&ctry=" + URLEncoder.encode(getCountry(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             System.out.println("Unsupported Encoding Exception: " +e);
         }
