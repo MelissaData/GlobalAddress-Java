@@ -54,6 +54,8 @@ public class GlobalAddressController  {
     private TextField inputPostalCodeText;
     @FXML
     private TextField inputCountryText;
+    @FXML
+    private TextField inputLastNameText;
 
     @FXML
     private ComboBox<String> optionDeliveryLinesBox;
@@ -65,6 +67,8 @@ public class GlobalAddressController  {
     private ComboBox<String> optionOutputGeoCodingBox;
     @FXML
     private TextField optionCountryOfOriginBox;
+    @FXML
+    private ComboBox<String> optionUSExtrasBox;
 
     @FXML
     private TextArea RequestTextArea;
@@ -128,6 +132,7 @@ public class GlobalAddressController  {
             inputAdministrativeAreaText.clear();
             inputPostalCodeText.clear();
             inputCountryText.clear();
+            inputLastNameText.clear();
             returnToConfiguration();
         });
     }
@@ -211,6 +216,12 @@ public class GlobalAddressController  {
             updateRequestText();
             returnToConfiguration();
         });
+        
+        inputLastNameText.textProperty().addListener((observable, oldvalue, newvalue) -> {
+            Transaction.setLastName(newvalue);
+            updateRequestText();
+            returnToConfiguration();
+        });
 
         optionCountryOfOriginBox.textProperty().addListener((observable, oldvalue, newvalue) -> {
             option.setOptionCountryOfOrigin(newvalue);
@@ -226,6 +237,7 @@ public class GlobalAddressController  {
         optionLineSeperatorBox.setItems(FXCollections.observableArrayList("", "SEMICOLON", "PIPE", "CR", "LF", "CRLF", "TAB", "BR"));
         optionOutputScriptBox.setItems(FXCollections.observableArrayList("", "NOCHANGE", "LATN", "NATIVE"));
         optionOutputGeoCodingBox.setItems(FXCollections.observableArrayList("", "ON", "OFF"));
+        optionUSExtrasBox.setItems(FXCollections.observableArrayList("", "ON", "OFF"));
     }
 
     public void setOptionDeliveryLines() {
@@ -250,6 +262,13 @@ public class GlobalAddressController  {
 
     public void setOptionOutputGeoCoding() {
         option.setOptionOutputGeo(optionOutputGeoCodingBox.getValue());
+        Transaction.setOptions(option);
+        updateRequestText();
+        returnToConfiguration();
+    }
+    
+    public void setOptionUSExtras() {
+        option.setOptionUSExtras(optionUSExtrasBox.getValue());
         Transaction.setOptions(option);
         updateRequestText();
         returnToConfiguration();

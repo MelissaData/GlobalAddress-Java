@@ -19,12 +19,12 @@ public class GlobalAddressTransaction {
     private String identNumber;
 
     private String addressLine1, addressLine2, addressLine3, addressLine4, addressLine5, addressLine6, addressLine7, addressLine8;
-    private String locality, administrativeArea, postalCode, country;
+    private String locality, administrativeArea, postalCode, country, lastName;
 
     private String format;
 
     public GlobalAddressTransaction() {
-        endpoint            = "https://address.melissadata.net/V3/WEB/GlobalAddress/doGlobalAddress?";
+        endpoint            = "http://address.melissadata.net/V3/WEB/GlobalAddress/doGlobalAddress?";
         options             =  new GlobalAddressOptions();
         identNumber         =  "";
         addressLine1        = "";
@@ -39,6 +39,7 @@ public class GlobalAddressTransaction {
         administrativeArea  = "";
         postalCode          = "";
         country             = "";
+        lastName			= "";
         format              = "";
     }
 
@@ -137,6 +138,9 @@ public class GlobalAddressTransaction {
 
             if(!getCountry().equals(""))
                 request += "&ctry=" + URLEncoder.encode(getCountry(), "UTF-8");
+            
+            if (!getLastName().equals(""))
+            	request += "&lastname=" + URLEncoder.encode(getLastName(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             System.out.println("Unsupported Encoding Exception: " +e);
         }
@@ -256,6 +260,14 @@ public class GlobalAddressTransaction {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+    
+    public String getLastName() {
+    	return lastName;
+    }
+    
+    public void setLastName(String lastName) {
+    	this.lastName = lastName;
     }
 
     public String getFormat() {

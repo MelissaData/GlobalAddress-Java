@@ -9,6 +9,7 @@ public class GlobalAddressOptions {
     private final StringProperty optionOutputScript;
     private final StringProperty optionOutputGeo;
     private final StringProperty optionCountryOfOrigin;
+    private final StringProperty optionUSExtras;
 
     public GlobalAddressOptions() {
         optionDeliveryLines = new SimpleStringProperty("");
@@ -16,6 +17,7 @@ public class GlobalAddressOptions {
         optionOutputScript = new SimpleStringProperty("");
         optionOutputGeo = new SimpleStringProperty("");
         optionCountryOfOrigin = new SimpleStringProperty("");
+        optionUSExtras = new SimpleStringProperty("");
     }
 
     public String generateOptionString() {
@@ -43,6 +45,11 @@ public class GlobalAddressOptions {
             optionString += ",OutputGeo:" + getOptionOutputGeo();
         else if(!getOptionOutputGeo().equals("") && optionString.equals(""))
             optionString += "OutputGeo:" + getOptionOutputGeo();
+        
+        if(!getOptionUSExtras().equals("") && !optionString.equals(""))
+            optionString += ",USExtras:" + getOptionUSExtras();
+        else if(!getOptionUSExtras().equals("") && optionString.equals(""))
+            optionString += "USExtras:" + getOptionUSExtras();
 
         return optionString;
     }
@@ -93,6 +100,18 @@ public class GlobalAddressOptions {
 
     public void setOptionOutputGeo(String optionOutputGeo) {
         this.optionOutputGeo.set(optionOutputGeo);
+    }
+    
+    public String getOptionUSExtras() {
+    	return optionUSExtras.get();
+    }
+    
+    public StringProperty optionUSExtras() {
+    	return optionUSExtras;
+    }
+    
+    public void setOptionUSExtras(String optionUSExtra) {
+    	this.optionUSExtras.set(optionUSExtra);
     }
 
     public String getOptionCountryOfOrigin() {

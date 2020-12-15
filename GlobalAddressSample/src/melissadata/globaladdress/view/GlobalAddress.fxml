@@ -27,15 +27,17 @@
                                         <Font size="18.0" />
                                     </font></Label>
                                 <Label layoutX="25.0" layoutY="63.0" prefHeight="17.0" prefWidth="151.0" text="Delivery Lines:" />
-                                <Label layoutX="26.0" layoutY="105.0" text="Line Seperator:" />
-                                <Label layoutX="26.0" layoutY="152.0" text="Output Script:" />
                                 <ComboBox fx:id="optionDeliveryLinesBox" layoutX="26.0" layoutY="80.0" onAction="#setOptionDeliveryLines" prefWidth="150.0" />
+                                <Label layoutX="26.0" layoutY="105.0" text="Line Separator:" />
                                 <ComboBox fx:id="optionLineSeperatorBox" layoutX="26.0" layoutY="122.0" onAction="#setOptionLineSeparator" prefWidth="150.0" />
+                                <Label layoutX="26.0" layoutY="152.0" text="Output Script:" />
                                 <ComboBox fx:id="optionOutputScriptBox" layoutX="26.0" layoutY="169.0" onAction="#setOptionOutputScript" prefWidth="150.0" />
                                 <Label layoutX="26.0" layoutY="202.0" text="Output GeoCoding:" />
                                 <ComboBox fx:id="optionOutputGeoCodingBox" layoutX="26.0" layoutY="223.0" onAction="#setOptionOutputGeoCoding" prefWidth="150.0" />
                                 <Label layoutX="26.0" layoutY="256.0" text="Country of Origin:" />
                                 <TextField fx:id="optionCountryOfOriginBox" layoutX="26.0" layoutY="277.0" prefWidth="150.0" />
+                                <Label layoutX="26.0" layoutY="310.0" text="US Extras:" />
+                                <ComboBox fx:id="optionUSExtrasBox" layoutX="26.0" layoutY="331.0" onAction="#setOptionUSExtras" prefWidth="150.0" />
                             </children>
                             <opaqueInsets>
                                 <Insets />
@@ -83,9 +85,10 @@
                 <TextField fx:id="inputAdministrativeAreaText" layoutX="10.0" layoutY="332.0" prefWidth="180.0" promptText="Enter Administrative Area..." />
                 <TextField fx:id="inputPostalCodeText" layoutX="10.0" layoutY="357.0" prefWidth="180.0" promptText="Enter Postal Code..." />
                 <TextField fx:id="inputCountryText" layoutX="9.0" layoutY="382.0" prefWidth="180.0" promptText="Enter Country..." />
-                <RadioButton fx:id="jsonResponseFormatRadio" layoutX="22.0" layoutY="429.0" mnemonicParsing="false" text="JSON" />
-                <RadioButton layoutX="103.0" layoutY="429.0" mnemonicParsing="false" text="XML" fx:id="xmlResponseFormatRadio" />
-                <ButtonBar layoutY="446.0" prefHeight="40.0" prefWidth="110.0">
+                <TextField fx:id="inputLastNameText" layoutX="9.0" layoutY="407.0" prefWidth="180.0" promptText="Enter Last Name..." />
+                <RadioButton fx:id="jsonResponseFormatRadio" layoutX="22.0" layoutY="440.0" mnemonicParsing="false" text="JSON" />
+                <RadioButton layoutX="103.0" layoutY="440.0" mnemonicParsing="false" text="XML" fx:id="xmlResponseFormatRadio" />
+                <ButtonBar layoutY="458.0" prefHeight="40.0" prefWidth="110.0">
                     <buttons>
                         <Button fx:id="buttonClear" mnemonicParsing="false" text="Clear" />
                         <Button fx:id="buttonSend" mnemonicParsing="false" prefHeight="25.0" text="Send" />
