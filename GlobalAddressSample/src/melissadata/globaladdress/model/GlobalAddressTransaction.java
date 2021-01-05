@@ -140,7 +140,7 @@ public class GlobalAddressTransaction {
                 request += "&ctry=" + URLEncoder.encode(getCountry(), "UTF-8");
             
             if (!getLastName().equals(""))
-            	request += "&lastname=" + URLEncoder.encode(getLastName(), "UTF-8");
+            	request += "&last=" + URLEncoder.encode(getLastName(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             System.out.println("Unsupported Encoding Exception: " +e);
         }
