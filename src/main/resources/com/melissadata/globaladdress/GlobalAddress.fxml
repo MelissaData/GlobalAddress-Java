@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="melissadata.globaladdress.view.GlobalAddressController">
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.melissadata.globaladdress.view.GlobalAddressController">
     <center>
         <TabPane fx:id="tabPane" prefHeight="323.0" prefWidth="674.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
@@ -25,7 +25,8 @@
                                 <Label layoutX="14.0" layoutY="28.0" text="Options" underline="true">
                                     <font>
                                         <Font size="18.0" />
-                                    </font></Label>
+                                    </font>
+                                </Label>
                                 <Label layoutX="25.0" layoutY="63.0" prefHeight="17.0" prefWidth="151.0" text="Delivery Lines:" />
                                 <ComboBox fx:id="optionDeliveryLinesBox" layoutX="26.0" layoutY="80.0" onAction="#setOptionDeliveryLines" prefWidth="150.0" />
                                 <Label layoutX="26.0" layoutY="105.0" text="Line Separator:" />
@@ -49,8 +50,13 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextArea fx:id="ResponseTextArea" layoutX="208.0" layoutY="58.0" prefHeight="471.0" prefWidth="600.0" promptText="Send a request..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                            </children></AnchorPane>
+                                <TextArea fx:id="ResponseTextArea" layoutX="208.0" layoutY="58.0" prefHeight="471.0" prefWidth="600.0" promptText="Send a request..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="12.0" />
+                                    </font>
+                                </TextArea>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
@@ -80,7 +86,8 @@
                 <TextField fx:id="inputAddressLine8Text" layoutX="10.0" layoutY="282.0" prefWidth="180.0" promptText="Enter Address Line 8...">
                     <opaqueInsets>
                         <Insets />
-                    </opaqueInsets></TextField>
+                    </opaqueInsets>
+                </TextField>
                 <TextField fx:id="inputLocalityText" layoutX="10.0" layoutY="307.0" prefWidth="180.0" promptText="Enter Locality..." />
                 <TextField fx:id="inputAdministrativeAreaText" layoutX="10.0" layoutY="332.0" prefWidth="180.0" promptText="Enter Administrative Area..." />
                 <TextField fx:id="inputPostalCodeText" layoutX="10.0" layoutY="357.0" prefWidth="180.0" promptText="Enter Postal Code..." />

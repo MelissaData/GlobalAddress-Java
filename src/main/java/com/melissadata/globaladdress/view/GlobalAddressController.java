@@ -1,4 +1,4 @@
-package melissadata.globaladdress.view;
+package com.melissadata.globaladdress.view;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -9,9 +9,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import melissadata.globaladdress.model.GlobalAddressTransaction;
-import melissadata.globaladdress.model.GlobalAddressOptions;
-import melissadata.globaladdress.Main;
+import com.melissadata.globaladdress.model.GlobalAddressTransaction;
+import com.melissadata.globaladdress.model.GlobalAddressOptions;
+import com.melissadata.globaladdress.Main;
 
 public class GlobalAddressController  {
 

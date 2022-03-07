@@ -1,15 +1,20 @@
-package melissadata.globaladdress.model;
-import org.apache.sling.commons.json.JSONObject;
+package com.melissadata.globaladdress.model;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.stream.Collectors;
 
 public class GlobalAddressTransaction {
 
@@ -24,9 +29,9 @@ public class GlobalAddressTransaction {
     private String format;
 
     public GlobalAddressTransaction() {
-        endpoint            = "http://address.melissadata.net/V3/WEB/GlobalAddress/doGlobalAddress?";
-        options             =  new GlobalAddressOptions();
-        identNumber         =  "";
+        endpoint            = "https://address.melissadata.net/V3/WEB/GlobalAddress/doGlobalAddress?";
+        options             = new GlobalAddressOptions();
+        identNumber         = "";
         addressLine1        = "";
         addressLine2        = "";
         addressLine3        = "";
@@ -39,114 +44,82 @@ public class GlobalAddressTransaction {
         administrativeArea  = "";
         postalCode          = "";
         country             = "";
-        lastName			= "";
+        lastName            = "";
         format              = "";
     }
 
     public String processTransaction(String request) {
         String response = "";
-        URI uri;
-        URL url;
         try {
-            uri = new URI(request);
-            url = new URL(uri.toURL().toString());
+            URL url = new URL(request);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(url.openStream()));
+            String responseBody = in.lines().collect(Collectors.joining());
+            response = format.equals("JSON")
+                ? getPrettyJSON(responseBody)
+                : getPrettyXML(responseBody);
 
-            HttpURLConnection urlConn = (HttpURLConnection)(url.openConnection());
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-
-            StringReader reader;
-            StringWriter writer = new StringWriter();
-            StringBuilder jsonResponse = new StringBuilder();
-            String inputLine = "";
-
-            if (format.equals("JSON"))
-            {
-                while ((inputLine = in.readLine()) != null) {
-                    jsonResponse.append(inputLine);
-                }
-                @SuppressWarnings("deprecation")
-                JSONObject test = new JSONObject(jsonResponse.toString());
-                response = test.toString(10);
-            } else {
-
-                String xmlLine = "";
-                String xmlString = "";
-
-                while((xmlLine = in.readLine()) != null) {
-                    xmlString += xmlLine + "\n";
-                }
-
-                TransformerFactory tf = TransformerFactory.newInstance();
-                Transformer t = tf.newTransformer();
-                t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "10");
-                t.setOutputProperty(OutputKeys.INDENT, "yes");
-
-                reader = new StringReader(xmlString);
-                try {
-                    t.transform(new javax.xml.transform.stream.StreamSource(reader), new javax.xml.transform.stream.StreamResult(writer));
-                } catch (TransformerException e) {
-                    e.printStackTrace();
-                }
-                response = writer.toString();
-
-            }
         } catch (Exception e){
             System.out.println("Error sending request: \n" + e);
         }
         return response;
     }
 
-    public String generateRequestString() {
-        String request = "";
-        request = endpoint;
-        request += "&id=" + getIdentNumber();
-        request += "&opt=" + options.generateOptionString();
+    private String getPrettyJSON(String json) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonObject responseObject = gson.fromJson(json, JsonObject.class);
+        return gson.toJson(responseObject);
+    }
+
+    private String getPrettyXML(String xml) {
+        String prettyXML = "";
         try {
-            if(!getAddressLine1().equals(""))
-                request += "&a1=" + URLEncoder.encode(getAddressLine1(), "UTF-8");
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer t = tf.newTransformer();
+            String indentSize = "{http://xml.apache.org/xslt}indent-amount";
+            t.setOutputProperty(indentSize, "2");
+            t.setOutputProperty(OutputKeys.INDENT, "yes");
+            Writer writer = new StringWriter();
+            t.transform(new StreamSource(new StringReader(xml)),
+                        new StreamResult(writer));
+            prettyXML = writer.toString();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+        return prettyXML;
+    }
 
-            if(!getAddressLine2().equals(""))
-                request += "&a2=" + URLEncoder.encode(getAddressLine2(), "UTF-8");
-
-            if(!getAddressLine3().equals(""))
-                request += "&a3=" + URLEncoder.encode(getAddressLine3(), "UTF-8");
-
-            if(!getAddressLine4().equals(""))
-                request += "&a4=" + URLEncoder.encode(getAddressLine4(), "UTF-8");
-
-            if(!getAddressLine5().equals(""))
-                request += "&a5=" + URLEncoder.encode(getAddressLine5(), "UTF-8");
-
-            if(!getAddressLine6().equals(""))
-                request += "&a6=" + URLEncoder.encode(getAddressLine6(), "UTF-8");
-
-            if(!getAddressLine7().equals(""))
-                request += "&a7=" + URLEncoder.encode(getAddressLine7(), "UTF-8");
-
-            if(!getAddressLine8().equals(""))
-                request += "&a8=" + URLEncoder.encode(getAddressLine8(), "UTF-8");
-
-            if(!getLocality().equals(""))
-                request += "&loc=" + URLEncoder.encode(getLocality(), "UTF-8");
-
-            if(!getAdministrativeArea().equals(""))
-                request += "&admarea=" + URLEncoder.encode(getAdministrativeArea(), "UTF-8");
-
-            if(!getPostalCode().equals(""))
-                request += "&postal=" + URLEncoder.encode(getPostalCode(), "UTF-8");
-
-            if(!getCountry().equals(""))
-                request += "&ctry=" + URLEncoder.encode(getCountry(), "UTF-8");
-            
-            if (!getLastName().equals(""))
-            	request += "&last=" + URLEncoder.encode(getLastName(), "UTF-8");
+    public String generateRequestString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(endpoint)
+            .append("&id=" + getIdentNumber())
+            .append("&opt=" + options.generateOptionString());
+        try {
+            sb.append(generateRequestParameter("a1", getAddressLine1()));
+            sb.append(generateRequestParameter("a2", getAddressLine2()));
+            sb.append(generateRequestParameter("a3", getAddressLine3()));
+            sb.append(generateRequestParameter("a4", getAddressLine4()));
+            sb.append(generateRequestParameter("a5", getAddressLine5()));
+            sb.append(generateRequestParameter("a6", getAddressLine6()));
+            sb.append(generateRequestParameter("a7", getAddressLine7()));
+            sb.append(generateRequestParameter("a8", getAddressLine8()));
+            sb.append(generateRequestParameter("loc", getLocality()));
+            sb.append(generateRequestParameter("admarea", getAdministrativeArea()));
+            sb.append(generateRequestParameter("postal", getPostalCode()));
+            sb.append(generateRequestParameter("ctry", getCountry()));
+            sb.append(generateRequestParameter("last", getLastName()));
         } catch (UnsupportedEncodingException e) {
             System.out.println("Unsupported Encoding Exception: " +e);
         }
-        request += "&format=" + getFormat();
+        sb.append("&format=" + getFormat());
 
-        return request;
+        return sb.toString();
+    }
+
+    private String generateRequestParameter(String key, String value) throws UnsupportedEncodingException {
+        if(value.equals("")) return "";
+        String encodedValue = URLEncoder.encode(value, "UTF-8");
+        return "&" + key + "=" + encodedValue;
     }
 
 

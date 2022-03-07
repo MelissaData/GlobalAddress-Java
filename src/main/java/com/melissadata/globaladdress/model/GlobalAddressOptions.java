@@ -1,4 +1,4 @@
-package melissadata.globaladdress.model;
+package com.melissadata.globaladdress.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
